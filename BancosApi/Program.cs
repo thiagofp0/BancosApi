@@ -3,10 +3,15 @@ using BancosApi.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//Logs
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//Injeção de dependências
 builder.Services.AddScoped<IBanksRepository, SqliteRepository>();
 
 var app = builder.Build();

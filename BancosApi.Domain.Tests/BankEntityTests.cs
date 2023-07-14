@@ -12,6 +12,7 @@ namespace BancosApi.Domain.Tests
             var bank = new Bank(id, document, longName, shortName);
 
             Assert.NotNull(bank);
+            Assert.Equal(bank.Id, id);
         }
 
         [Theory]

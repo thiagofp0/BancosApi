@@ -9,11 +9,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BancosApi.Infrastructure", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BancosApi.Domain", "BancosApi.Domain\BancosApi.Domain.csproj", "{C7D09E2E-DAA0-4C83-BBAD-B6A1B3CB1E81}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BancosApi.Domain.Tests", "BancosApi.Domain.Tests\BancosApi.Domain.Tests.csproj", "{246C6E83-391C-4778-8D25-D3805A17B81A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BancosApi.Domain.Tests", "BancosApi.Domain.Tests\BancosApi.Domain.Tests.csproj", "{246C6E83-391C-4778-8D25-D3805A17B81A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{89383519-F938-4831-963C-7AFFF8265E6D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{FF965B12-85B7-40F1-8B0F-4E230ED81245}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BancosApi.Api.Tests", "BancosApi.Api.Tests\BancosApi.Api.Tests.csproj", "{9A2CCA04-1A77-417D-8700-084831FAB11E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +39,10 @@ Global
 		{246C6E83-391C-4778-8D25-D3805A17B81A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{246C6E83-391C-4778-8D25-D3805A17B81A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{246C6E83-391C-4778-8D25-D3805A17B81A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A2CCA04-1A77-417D-8700-084831FAB11E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A2CCA04-1A77-417D-8700-084831FAB11E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A2CCA04-1A77-417D-8700-084831FAB11E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A2CCA04-1A77-417D-8700-084831FAB11E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,6 +52,7 @@ Global
 		{C81F6579-6B98-437E-B2A5-D9687838A554} = {89383519-F938-4831-963C-7AFFF8265E6D}
 		{C7D09E2E-DAA0-4C83-BBAD-B6A1B3CB1E81} = {89383519-F938-4831-963C-7AFFF8265E6D}
 		{246C6E83-391C-4778-8D25-D3805A17B81A} = {FF965B12-85B7-40F1-8B0F-4E230ED81245}
+		{9A2CCA04-1A77-417D-8700-084831FAB11E} = {FF965B12-85B7-40F1-8B0F-4E230ED81245}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {51EA5505-FEC0-4121-921F-8F1A26FD4F90}

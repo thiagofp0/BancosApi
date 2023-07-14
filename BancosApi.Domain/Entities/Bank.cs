@@ -25,6 +25,11 @@
 
             if (shortName == null || String.IsNullOrEmpty(shortName))
                 throw new ArgumentNullException("Short name can't be null.");
+
+            this.Id = id;
+            this.Document = document;
+            this.LongName = longName;
+            this.ShortName = shortName;
         }
     }
 }
