@@ -1,5 +1,4 @@
 ﻿using Microsoft.Data.Sqlite;
-using System.IO;
 
 namespace BancosApi.Infrastructure.Database
 {
@@ -10,6 +9,7 @@ namespace BancosApi.Infrastructure.Database
 
         public SqliteConnection GetConnection()
         {
+            // TODO: tratar exceptions
             var databasePath = Path.Combine(currentDirectory, databaseFileName);
             var connectionString = $"Data Source={databasePath}";
 
