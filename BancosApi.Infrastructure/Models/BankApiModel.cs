@@ -1,6 +1,6 @@
 ﻿using BancosApi.Domain.Entities;
 
-namespace BancosApi.Models
+namespace BancosApi.Infrastructure.Models
 {
     public class BankApiModel
     {

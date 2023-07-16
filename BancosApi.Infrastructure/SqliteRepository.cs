@@ -1,23 +1,38 @@
-﻿using BancosApi.Domain.Entities;
+﻿using Dapper;
+using BancosApi.Domain.Entities;
 using BancosApi.Domain.Interfaces;
+using BancosApi.Infrastructure.Database;
 
 namespace BancosApi.Infrastructure
 {
     public class SqliteRepository : IBanksRepository
     {
-        public List<Bank> GetBanks()
+        private const string GET_BANKS = "SELECT * FROM Banks";
+        private const string GET_BANK = "SELECT * FROM Banks WHERE id=@Id";
+
+        private readonly DbConnection _connection = new();
+
+        public IEnumerable<Bank> GetBanks()
         {
-            return new List<Bank>()
-            {
-                new Bank(1, "123456", "Banco do Brasil", "BB"),
-                new Bank(2, "123457", "Bradesco S.A.", "Bradesco"),
-                new Bank(3, "123458", "Nu Pagamentos S.A.", "Nubank"),
-            };
+            // TODO: Conexão com o banco está pegando caminho errado até o arquivo - Ideal seria colocar em uma connection string
+            // TODO: Retorno do banco precisa ser tratado para que seja exibido corretamente.
+            // TODO: no retorno do banco colocar BankApiModel e criar Mapping para classe mais resumida
+            var banks = Query<Bank>(GET_BANKS);
+            return banks;
         }
 
         public Bank GetBank(long id)
         {
-            return new Bank(id, "12345", "Banco Teste", "BT");
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@Id", id);
+            var bank = Query<Bank>(GET_BANK, parameters);
+            return bank.FirstOrDefault() ?? throw new KeyNotFoundException("No Banks found for given id.");
+        }
+
+        private IEnumerable<T> Query<T>(string sql, object? parameters = null)
+        {
+            using var connectionClient = _connection.GetConnection();
+            return connectionClient.Query<T>(new CommandDefinition(sql, parameters));
         }
     }
 }
