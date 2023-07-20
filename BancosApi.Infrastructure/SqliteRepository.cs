@@ -2,6 +2,8 @@
 using BancosApi.Domain.Entities;
 using BancosApi.Domain.Interfaces;
 using BancosApi.Infrastructure.Database;
+using BancosApi.Infrastructure.Models;
+using AutoMapper;
 
 namespace BancosApi.Infrastructure
 {
@@ -11,14 +13,17 @@ namespace BancosApi.Infrastructure
         private const string GET_BANK = "SELECT * FROM Banks WHERE id=@Id";
 
         private readonly DbConnection _connection = new();
+        private readonly IMapper _mapper;
+
+        public SqliteRepository(IMapper mapper)
+        {
+            _mapper = mapper;
+        }
 
         public IEnumerable<Bank> GetBanks()
         {
-            // TODO: Conexão com o banco está pegando caminho errado até o arquivo - Ideal seria colocar em uma connection string
-            // TODO: Retorno do banco precisa ser tratado para que seja exibido corretamente.
-            // TODO: no retorno do banco colocar BankApiModel e criar Mapping para classe mais resumida
-            var banks = Query<Bank>(GET_BANKS);
-            return banks;
+            var banks = Query<BankDatabaseModel>(GET_BANKS);
+            return _mapper.Map<IEnumerable<Bank>>(banks);
         }
 
         public Bank GetBank(long id)
@@ -26,7 +31,7 @@ namespace BancosApi.Infrastructure
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("@Id", id);
             var bank = Query<Bank>(GET_BANK, parameters);
-            return bank.FirstOrDefault() ?? throw new KeyNotFoundException("No Banks found for given id.");
+            return _mapper.Map<Bank>(bank.FirstOrDefault()) ?? throw new KeyNotFoundException("No Banks found for given id.");
         }
 
         private IEnumerable<T> Query<T>(string sql, object? parameters = null)

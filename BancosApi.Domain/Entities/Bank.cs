@@ -2,7 +2,7 @@
 {
     public class Bank
     {
-        public long Id { get; set; }
+        public long? Id { get; set; }
         public string Document { get; set; } = String.Empty;
         public string LongName { get; set; } = String.Empty;
         public string ShortName { get; set; } = String.Empty;

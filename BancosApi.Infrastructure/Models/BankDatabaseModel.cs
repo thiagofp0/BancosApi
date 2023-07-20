@@ -1,9 +1,8 @@
-﻿using BancosApi.Domain.Entities;
-
-namespace BancosApi.Infrastructure.Models
+﻿namespace BancosApi.Infrastructure.Models
 {
-    public class BankApiModel
+    public class BankDatabaseModel
     {
+        public string Compe { get; set; } = String.Empty;
         public string Document { get; set; } = String.Empty;
         public string LongName { get; set; } = String.Empty;
         public string ShortName { get; set; } = String.Empty;
@@ -13,7 +12,7 @@ namespace BancosApi.Infrastructure.Models
         public string Charge { get; set; } = String.Empty;
         public string CreditDocument { get; set; } = String.Empty;
         public string SalaryPortability { get; set; } = String.Empty;
-        public IEnumerable<Product> Products { get; set; } = Enumerable.Empty<Product>();
+        public string Products { get; set; } = String.Empty;
         public string? Url { get; set; } = String.Empty;
         public DateTime? DateOperationStarted { get; set; } = null;
         public DateTime? DatePixStarted { get; set; } = null;

@@ -1,5 +1,6 @@
 using BancosApi.Domain.Interfaces;
 using BancosApi.Infrastructure;
+using BancosApi.Infrastructure.Mapping;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 
+//Mapping
+builder.Services.AddAutoMapper(typeof(MapProfile));
+
+//Configs
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

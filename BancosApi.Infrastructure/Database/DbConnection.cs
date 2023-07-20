@@ -1,10 +1,11 @@
 ﻿using Microsoft.Data.Sqlite;
+using System.IO;
 
 namespace BancosApi.Infrastructure.Database
 {
     public class DbConnection
     {
-        private readonly string currentDirectory = Directory.GetCurrentDirectory();
+        private readonly string currentDirectory = Path.GetFullPath("../BancosApi.Infrastructure/Database");
         private readonly string databaseFileName = "db.sqlite";
 
         public SqliteConnection GetConnection()

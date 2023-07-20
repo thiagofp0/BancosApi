@@ -23,7 +23,7 @@ namespace BancosApi.Api.Tests
             var repository = new Mock<IBanksRepository>();
             var controller = new BanksController(logger.Object, repository.Object);
 
-            repository.Setup(repo => repo.GetBanks()).Returns(banksMockList);
+            repository.Setup(repo => repo.GetBanksAsync()).Returns(banksMockList);
 
             var banks = controller.GetAll();
 
