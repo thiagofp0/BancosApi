@@ -34,6 +34,9 @@ namespace BancosApi.Controllers
 
             var bank = _banksRepository.GetBank(id);
 
+            if (bank == null)
+                return NotFound("No Banks found for given id.");
+            
             return Ok(bank);
         }
 

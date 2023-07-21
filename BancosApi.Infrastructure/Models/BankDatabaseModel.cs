@@ -3,6 +3,7 @@
     public class BankDatabaseModel
     {
         public string Compe { get; set; } = String.Empty;
+        public string Ispb { get; set; } = String.Empty;
         public string Document { get; set; } = String.Empty;
         public string LongName { get; set; } = String.Empty;
         public string ShortName { get; set; } = String.Empty;

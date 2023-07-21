@@ -10,7 +10,7 @@ namespace BancosApi.Infrastructure
     public class SqliteRepository : IBanksRepository
     {
         private const string GET_BANKS = "SELECT * FROM Banks";
-        private const string GET_BANK = "SELECT * FROM Banks WHERE id=@Id";
+        private const string GET_BANK = "SELECT * FROM Banks WHERE Compe=@Compe";
 
         private readonly DbConnection _connection = new();
         private readonly IMapper _mapper;
@@ -28,10 +28,18 @@ namespace BancosApi.Infrastructure
 
         public Bank GetBank(long id)
         {
-            DynamicParameters parameters = new DynamicParameters();
-            parameters.Add("@Id", id);
-            var bank = Query<Bank>(GET_BANK, parameters);
-            return _mapper.Map<Bank>(bank.FirstOrDefault()) ?? throw new KeyNotFoundException("No Banks found for given id.");
+            try
+            {
+                var bankId = string.Format("{0:000}", id); // "001"
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@Compe", bankId);
+                var bank = Query<BankDatabaseModel>(GET_BANK, parameters);
+                return _mapper.Map<Bank>(bank.FirstOrDefault()) ?? throw new KeyNotFoundException("No Banks found for given id.");
+            }
+            catch(KeyNotFoundException ex)
+            {
+                return null;
+            }
         }
 
         private IEnumerable<T> Query<T>(string sql, object? parameters = null)

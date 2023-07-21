@@ -9,7 +9,7 @@ namespace BancosApi.Infrastructure.Mapping
         public MapProfile()
         {
             CreateMap<BankDatabaseModel, Bank>()
-                .ConstructUsing(src => new(Convert.ToInt64(src.Compe), src.Document, src.LongName, src.ShortName))
+                .ConstructUsing(src => new(Convert.ToInt64(src.Compe), src.Document, src.LongName, src.ShortName, src.Network, src.Url, src.Products, src.DateOperationStarted, src.DatePixStarted))
                 .ForAllMembers(cfg => cfg.Ignore());
         }
     }
