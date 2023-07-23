@@ -4,7 +4,7 @@ namespace BancosApi.Domain.Interfaces
 {
     public interface IBanksRepository
     {
-        public IEnumerable<Bank> GetBanks();
-        public Bank GetBank(long id);
+        public Task<IEnumerable<Bank>> GetBanks();
+        public Task<Bank> GetBank(string id);
     }
 }

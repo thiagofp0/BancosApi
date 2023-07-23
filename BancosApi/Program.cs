@@ -1,5 +1,7 @@
+using BancosApi.Domain.Base.Api.Middlewares;
 using BancosApi.Domain.Interfaces;
 using BancosApi.Infrastructure;
+using BancosApi.Infrastructure.Database;
 using BancosApi.Infrastructure.Mapping;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,11 +19,15 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 //Injeção de dependências
-builder.Services.AddScoped<IBanksRepository, SqliteRepository>();
+builder.Services.AddScoped<DbConnection>();
+builder.Services.AddScoped<IBanksRepository, SqlRepository>();
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+//Middlewares
+app.UseMiddleware<ExceptionHandler>();
+
+if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 {
     app.UseSwagger();
     app.UseSwaggerUI();

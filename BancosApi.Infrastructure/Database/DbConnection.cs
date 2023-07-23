@@ -1,21 +1,25 @@
-﻿using Microsoft.Data.Sqlite;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Data.Sqlite;
+using MySqlConnector;
 
 namespace BancosApi.Infrastructure.Database
 {
     public class DbConnection
     {
+        private readonly IConfiguration _configuration;
         private readonly string currentDirectory = Path.GetFullPath("../BancosApi.Infrastructure/Database");
         private readonly string databaseFileName = "db.sqlite";
 
-        public SqliteConnection GetConnection()
+        public DbConnection(IConfiguration configuration)
         {
-            // TODO: tratar exceptions
-            var databasePath = Path.Combine(currentDirectory, databaseFileName);
-            var connectionString = $"Data Source={databasePath}";
+            _configuration = configuration;
+        }
 
-            var connection = new SqliteConnection(connectionString);
+        public MySqlConnection GetMySqlConnection()
+        {
+            var connectionString = _configuration.GetConnectionString("MySql");
+            var connection = new MySqlConnection(connectionString);
             connection.Open();
-
             return connection;
         }
     }

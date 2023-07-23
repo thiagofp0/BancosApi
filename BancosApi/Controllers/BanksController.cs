@@ -17,22 +17,23 @@ namespace BancosApi.Controllers
         }
         
         [HttpGet("Banks")]
-        public ObjectResult GetAll()
+        public async Task<ObjectResult> GetAll()
         {
             _logger.LogInformation("Start Getting all banks at {DT}", DateTime.UtcNow.ToLongTimeString());
 
-            var banks = _banksRepository.GetBanks();
+            var banks = await _banksRepository.GetBanks();
 
             return Ok(banks);
         }
 
 
         [HttpGet("Banks/{id}")]
-        public ObjectResult Get(long id)
+        public async Task<ObjectResult> Get(long id)
         {
             _logger.LogInformation("Start Getting bank by id = {ID} at {DT}", id, DateTime.UtcNow.ToLongTimeString());
 
-            var bank = _banksRepository.GetBank(id);
+            var idString = string.Format("{0:000}", id);
+            var bank = await _banksRepository.GetBank(idString);
 
             if (bank == null)
                 return NotFound("No Banks found for given id.");

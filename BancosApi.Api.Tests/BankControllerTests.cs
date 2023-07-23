@@ -27,16 +27,17 @@ namespace BancosApi.Api.Tests
 
             var banks = controller.GetAll();
 
-            Assert.True(banks.StatusCode.HasValue);
-            Assert.Equal(200, banks.StatusCode.Value);
-            Assert.NotNull(banks.Value);
+            Assert.True(banks.Result.StatusCode.HasValue);
+            Assert.Equal(200, banks.Result.StatusCode);
+            Assert.NotNull(banks.Result.Value);
         }
 
         [Fact]
         public void GetBank_Ok()
         {
-            int id = 1;
-            var bankMock = new Bank(id, "12345", "Banco Teste", "BT", "network", "website", "products", null, null);
+            string id = "001";
+            
+            var bankMock = new Bank(Convert.ToInt64(id), "12345", "Banco Teste", "BT", "network", "website", "products", null, null);
 
             var logger = new Mock<ILogger<BanksController>>();
             var repository = new Mock<IBanksRepository>();
@@ -45,9 +46,9 @@ namespace BancosApi.Api.Tests
             repository.Setup(repo => repo.GetBank(id)).Returns(bankMock);
 
             var bank = controller.Get(id);
-            Assert.True(bank.StatusCode.HasValue);
-            Assert.Equal(200, bank.StatusCode.Value);
-            Assert.NotNull(bank.Value);
+            Assert.True(bank.Result.StatusCode.HasValue);
+            Assert.Equal(200, bank.Result.StatusCode);
+            Assert.NotNull(bank.Result.Value);
         }
     }
 }
