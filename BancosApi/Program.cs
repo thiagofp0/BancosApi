@@ -1,8 +1,10 @@
+using BancosApi.Domain.Base.Adapters;
 using BancosApi.Domain.Base.Api.Middlewares;
 using BancosApi.Domain.Interfaces;
 using BancosApi.Infrastructure;
 using BancosApi.Infrastructure.Database;
 using BancosApi.Infrastructure.Mapping;
+using MySqlConnector;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +23,7 @@ builder.Services.AddSwaggerGen();
 //Injeção de dependências
 builder.Services.AddScoped<DbConnection>();
 builder.Services.AddScoped<IBanksRepository, SqlRepository>();
+builder.Services.AddScoped<ISqlDatabaseAdapter<MySqlConnection>, DbConnection>();
 
 var app = builder.Build();
 

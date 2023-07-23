@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using BancosApi.Domain.Base.Adapters;
+using BancosApi.Domain.Base.Exceptions;
 using BancosApi.Domain.Entities;
 using BancosApi.Domain.Interfaces;
-using BancosApi.Infrastructure.Database;
 using BancosApi.Infrastructure.Models;
 using Dapper;
+using MySqlConnector;
 
 namespace BancosApi.Infrastructure
 {
@@ -12,10 +14,10 @@ namespace BancosApi.Infrastructure
         private const string GET_BANKS = "SELECT * FROM Banks";
         private const string GET_BANK = "SELECT * FROM Banks WHERE Compe=@Compe";
 
-        private readonly DbConnection _connection;
+        private readonly ISqlDatabaseAdapter<MySqlConnection> _connection;
         private readonly IMapper _mapper;
 
-        public SqlRepository(IMapper mapper, DbConnection connection)
+        public SqlRepository(IMapper mapper, ISqlDatabaseAdapter<MySqlConnection> connection)
         {
             _mapper = mapper;
             _connection = connection;
@@ -23,17 +25,10 @@ namespace BancosApi.Infrastructure
 
         public async Task<Bank> GetBank(string id)
         {
-            try
-            {
-                DynamicParameters parameters = new DynamicParameters();
-                parameters.Add("@Compe", id);
-                var bank = await QueryAsync<BankDatabaseModel>(GET_BANK, parameters);
-                return _mapper.Map<Bank>(bank.FirstOrDefault()) ?? throw new KeyNotFoundException("No Banks found for given id.");
-            }
-            catch (KeyNotFoundException ex)
-            {
-                return null;
-            }
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@Compe", id);
+            var bank = await QueryAsync<BankDatabaseModel>(GET_BANK, parameters);
+            return _mapper.Map<Bank>(bank.FirstOrDefault()) ?? throw new NoResultsException("No Banks found for given id.");
         }
 
         public async Task<IEnumerable<Bank>> GetBanks()
@@ -44,7 +39,7 @@ namespace BancosApi.Infrastructure
 
         private async Task<IEnumerable<T>> QueryAsync<T>(string sql, object? parameters = null)
         {
-            using var connectionClient = _connection.GetMySqlConnection();
+            using var connectionClient = _connection.GetConnection();
             return await connectionClient.QueryAsync<T>(new CommandDefinition(sql, parameters));
         }
     }

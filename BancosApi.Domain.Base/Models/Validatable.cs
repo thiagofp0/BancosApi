@@ -1,6 +1,6 @@
 ﻿using BancosApi.Domain.Base.Exceptions;
 
-namespace BancosApi.Domain.Base
+namespace BancosApi.Domain.Base.Models
 {
     public class Validatable
     {
@@ -10,7 +10,7 @@ namespace BancosApi.Domain.Base
         public void AddNotification(Notification notification) => Notifications.Add(notification);
         public void AddNotifications(IEnumerable<Notification> notifications) => Notifications.AddRange(notifications);
         protected void ClearNotifications() => Notifications.Clear();
-        public bool Validate() 
+        public bool Validate()
         {
             if (Notifications.Any())
                 throw new InvalidDomainStateException(Notifications);
