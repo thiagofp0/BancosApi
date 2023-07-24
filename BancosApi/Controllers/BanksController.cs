@@ -1,4 +1,7 @@
-﻿using BancosApi.Domain.Interfaces;
+﻿using AutoMapper;
+using BancosApi.Domain.Interfaces;
+using BancosApi.Domain.QueryObjects;
+using BancosApi.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BancosApi.Controllers
@@ -9,11 +12,13 @@ namespace BancosApi.Controllers
     {
         private readonly ILogger<BanksController> _logger;
         private readonly IBanksRepository _banksRepository;
+        private readonly IMapper _mapper;
 
-        public BanksController(ILogger<BanksController> logger, IBanksRepository banksRepository)
+        public BanksController(ILogger<BanksController> logger, IBanksRepository banksRepository, IMapper mapper)
         {
             _logger = logger;
             _banksRepository = banksRepository;
+            _mapper = mapper;
         }
         
         [HttpGet("Banks")]
@@ -41,5 +46,16 @@ namespace BancosApi.Controllers
             return Ok(bank);
         }
 
+        [HttpPost("Banks")]
+        public async Task<ObjectResult> Post([FromBody] BanksRequestApiModel banksRequestApiModel)
+        {
+            _logger.LogInformation("Start Creating bank at {DT}", DateTime.UtcNow.ToLongTimeString());
+
+            var queryObject = _mapper.Map<CreateBankQueryObject>(banksRequestApiModel);
+
+            var result = await _banksRepository.CreateBank(queryObject);
+
+            return Ok(result);
+        }
     }
 }

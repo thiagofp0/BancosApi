@@ -4,6 +4,7 @@ using BancosApi.Domain.Interfaces;
 using BancosApi.Infrastructure;
 using BancosApi.Infrastructure.Database;
 using BancosApi.Infrastructure.Mapping;
+using BancosApi.Mapping;
 using MySqlConnector;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,7 +14,8 @@ builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 
 //Mapping
-builder.Services.AddAutoMapper(typeof(MapProfile));
+builder.Services.AddAutoMapper(typeof(InfrastructureMapProfile));
+builder.Services.AddAutoMapper(typeof(ApiMapProfile));
 
 //Configs
 builder.Services.AddControllers();

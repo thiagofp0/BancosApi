@@ -9,13 +9,13 @@ namespace BancosApi.Domain.Entities
         public string LongName { get; private set; } = string.Empty;
         public string ShortName { get; private set; } = string.Empty;
         public string? Network { get; private set; } = string.Empty;
-        public string? Url { get; private set; } = string.Empty;
-        private string? ProductsString { get; set; } = string.Empty;
+        public string? Url { get; private set; }
+        private string? ProductsString { get; set; }
         public List<Product>? Products { get => ParseProducts(ProductsString); }
         public DateTime? DateOperationStarted { get; private set; }
         public DateTime? DatePixStarted { get; private set; }
 
-        public Bank(long id, string document, string longName, string shortName, string network, string website, string products, DateTime? dateOperationStarted, DateTime? datePixStarted)
+        public Bank(long id, string document, string longName, string shortName, string? network, string? website, string? products, DateTime? dateOperationStarted, DateTime? datePixStarted)
         {
             if (id <= 0)
                 AddNotification("Id must be higher than 0.");
