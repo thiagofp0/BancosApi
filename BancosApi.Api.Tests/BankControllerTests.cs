@@ -4,6 +4,7 @@ using BancosApi.Controllers;
 using BancosApi.Domain.Interfaces;
 using Microsoft.Extensions.Logging;
 using BancosApi.Domain.Entities;
+using AutoMapper;
 
 namespace BancosApi.Api.Tests
 {
@@ -21,9 +22,10 @@ namespace BancosApi.Api.Tests
 
             var logger = new Mock<ILogger<BanksController>>();
             var repository = new Mock<IBanksRepository>();
-            var controller = new BanksController(logger.Object, repository.Object);
+            var mapper = new Mock<IMapper>();
+            var controller = new BanksController(logger.Object, repository.Object, mapper.Object);
 
-            repository.Setup(repo => repo.GetBanks()).Returns(banksMockList);
+            repository.Setup(repo => repo.GetBanks()).ReturnsAsync(banksMockList);
 
             var banks = controller.GetAll();
 
@@ -35,15 +37,17 @@ namespace BancosApi.Api.Tests
         [Fact]
         public void GetBank_Ok()
         {
-            string id = "001";
-            
+            long id = 1;
+            var idString = string.Format("{0:000}", id);
+
             var bankMock = new Bank(Convert.ToInt64(id), "12345", "Banco Teste", "BT", "network", "website", "products", null, null);
 
             var logger = new Mock<ILogger<BanksController>>();
             var repository = new Mock<IBanksRepository>();
-            var controller = new BanksController(logger.Object, repository.Object);
+            var mapper = new Mock<IMapper>();
+            var controller = new BanksController(logger.Object, repository.Object, mapper.Object);
 
-            repository.Setup(repo => repo.GetBank(id)).Returns(bankMock);
+            repository.Setup(repo => repo.GetBank(idString)).ReturnsAsync(bankMock);
 
             var bank = controller.Get(id);
             Assert.True(bank.Result.StatusCode.HasValue);
